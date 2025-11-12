@@ -13,17 +13,32 @@ import {
 import { dashboard } from '@/routes';
 import { type NavItem } from '@/types';
 import { Link, usePage } from '@inertiajs/react';
-import { BookOpen, Folder, Key, LayoutGrid, UserRoundCog } from 'lucide-react';
+import { ChartPie, Key, UserCheck, UserRoundCog, Users } from 'lucide-react';
 import AppLogo from './app-logo';
 
-const mainNavItems: NavItem[] = [
+
+const mainNavDashboard: NavItem[] = [
     {
-        title: 'Dashboard',
-        href: dashboard(),
-        icon: LayoutGrid,
+        title: "Dashbord",
+        href: "dashboard",
+        icon: ChartPie,
+        permission: 'dashboard',
+    }
+];
+const mainNavMaster: NavItem[] = [
+    {
+        title: "Pegawai",
+        href: "master.pegawai.index",
+        icon: Users,
+        permission: 'pegawai-index',
+    },
+    {
+        title: "Pengguna",
+        href: "master.pengguna.index",
+        icon: UserCheck,
+        permission: 'pengguna-index',
     },
 ];
-
 const footerNavItems: NavItem[] = [
     {
         title: 'Role',
@@ -56,7 +71,8 @@ export function AppSidebar() {
             </SidebarHeader>
 
             <SidebarContent>
-                <NavMain items={mainNavItems} />
+                <NavMain items={mainNavDashboard} permissions={permissions} title="Dashboard" />
+                <NavMain items={mainNavMaster} permissions={permissions} title="Master" />
             </SidebarContent>
 
             <SidebarFooter>

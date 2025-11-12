@@ -65,8 +65,7 @@ export default function Index({ gate }: IndexGate) {
     const getData = async () => {
         setLoading(true)
         try {
-            const response = await axios.post(
-                route('permission.data'),
+            const response = await axios.post(route('permission.data'),
                 {
                     page: infoDataTabel.page,
                     search: infoDataTabel.search,

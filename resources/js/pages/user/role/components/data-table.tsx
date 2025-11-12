@@ -50,12 +50,12 @@ export default function DataTable({
                             className="hover:bg-gray-100 dark:hover:bg-slate-900 align-text-top"
                         >
                             <td className="px-2 py-1 border text-center">{from++}</td>
-                            <td className="px-2 py-1 border w-1/9">{value.name}</td>
+                            <td className="px-2 py-1 border whitespace-nowrap">{value.name}</td>
                             <td className="px-2 py-1 border">
                                 {value.permissions?.map((p: any) => (
                                     <Badge
                                         variant={'outline'}
-                                        key={p.uuid}
+                                        key={p.id}
                                         className="me-1 mb-1"
                                     >
                                         {p.name}
@@ -74,13 +74,9 @@ export default function DataTable({
                                                     setForm(true),
                                                     setIsEdit(true),
                                                     setData({
-                                                        uuid: value.uuid,
+                                                        id: value.id,
                                                         nama: value.name,
-                                                        permissions:
-                                                            value.permissions?.map(
-                                                                (p: any) =>
-                                                                    p.uuid
-                                                            ) || [],
+                                                        permissions: value.permissions?.map((p: any) =>p.id) || [],
                                                     })
                                                 }}
                                             >
@@ -88,7 +84,7 @@ export default function DataTable({
                                             </DropdownMenuItem>
                                         )}
                                         {gate.delete && (
-                                            <DropdownMenuItem onClick={() => {setHapus(true),setData({uuid: value.uuid})}}>
+                                            <DropdownMenuItem onClick={() => {setHapus(true),setData({id: value.id})}}>
                                                 <BadgeX /> Hapus
                                             </DropdownMenuItem>
                                         )}

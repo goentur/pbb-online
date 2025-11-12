@@ -1,5 +1,10 @@
 import { InertiaLinkProps } from '@inertiajs/react';
 import { LucideIcon } from 'lucide-react';
+import type { route as routeFn } from 'ziggy-js';
+
+declare global {
+    const route: typeof routeFn;
+}
 
 export interface Auth {
     user: User;
@@ -17,10 +22,15 @@ export interface NavGroup {
 
 export interface NavItem {
     title: string;
-    href: NonNullable<InertiaLinkProps['href']>;
+    href: string;
     icon?: LucideIcon | null;
     isActive?: boolean;
     permission?: string;
+    items? : {
+        title: string
+        href: string
+        permission?: string;
+    }[]
 }
 
 export interface SharedData {
@@ -41,4 +51,35 @@ export interface User {
     created_at: string;
     updated_at: string;
     [key: string]: unknown; // This allows for additional properties...
+}
+
+export interface InfoDataTabel {
+    page: number | 1,
+    from: number | 0,
+    to: number | 0,
+    total: number | 0,
+    perPage: number | 25,
+    search?: string | null,
+    berdasarkan?: string | null,
+}
+
+export interface LinkPagination {
+    label: string
+    url: string | null
+    active: boolean
+}
+
+export interface IndexGate {
+    gate: {
+        create: boolean
+        update: boolean
+        delete: boolean
+    }
+}
+
+export interface Gate {
+    create: boolean
+    update: boolean
+    delete: boolean
+    validasi?: boolean
 }

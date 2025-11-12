@@ -6,11 +6,11 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Common\DataRequest;
 use App\Http\Requests\User\Role\StoreRequest;
 use App\Http\Requests\User\Role\UpdateRequest;
-use App\Models\Role;
 use App\Repositories\User\RoleRepository;
 use App\Support\Facades\Memo;
 use Illuminate\Routing\Controllers\HasMiddleware;
 use Illuminate\Routing\Controllers\Middleware;
+use Spatie\Permission\Models\Role;
 
 class RoleController extends Controller implements HasMiddleware
 {
@@ -70,13 +70,13 @@ class RoleController extends Controller implements HasMiddleware
 
     public function update(UpdateRequest $request, Role $role)
     {
-        $this->repository->update($role->uuid, $request);
+        $this->repository->update($role->id, $request);
         back()->with('success', 'Data berhasil diubah');
     }
 
     public function destroy(Role $role)
     {
-        $this->repository->delete($role->uuid);
+        $this->repository->delete($role->id);
         back()->with('success', 'Data berhasil dihapus');
     }
 

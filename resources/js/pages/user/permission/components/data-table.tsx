@@ -51,11 +51,11 @@ export default function DataTable({
                             className="hover:bg-gray-100 dark:hover:bg-slate-900 align-text-top"
                         >
                             <td className="px-2 py-1 border text-center">{from++}</td>
-                            <td className="px-2 py-1 border">{value.name}</td>
+                            <td className="px-2 py-1 border whitespace-nowrap">{value.name}</td>
                             <td className="px-2 py-1 border">{value.guard_name}</td>
                             <td className="px-2 py-1 border">
                                 {value.roles?.map((p: any) => (
-                                    <Badge variant={'outline'} key={p.uuid} className="me-1 mb-1">
+                                    <Badge variant={'outline'} key={p.id} className="me-1 mb-1">
                                         {p.name}
                                     </Badge>
                                 ))}
@@ -72,10 +72,10 @@ export default function DataTable({
                                                     setForm(true),
                                                     setIsEdit(true),
                                                     setData({
-                                                        uuid: value.uuid,
+                                                        id: value.id,
                                                         nama: value.name,
                                                         guard_name: value.guard_name,
-                                                        roles: value.roles?.map((p: any) =>p.uuid) || [],
+                                                        roles: value.roles?.map((p: any) =>p.id) || [],
                                                     })
                                                 }}
                                             >
@@ -83,7 +83,7 @@ export default function DataTable({
                                             </DropdownMenuItem>
                                         )}
                                         {gate.delete && (
-                                            <DropdownMenuItem onClick={() => {setHapus(true),setData({uuid: value.uuid})}}>
+                                            <DropdownMenuItem onClick={() => {setHapus(true),setData({id: value.id})}}>
                                                 <BadgeX /> Hapus
                                             </DropdownMenuItem>
                                         )}

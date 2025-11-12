@@ -59,7 +59,7 @@ class PermissionRepository
 
     public function data($request)
     {
-        return $this->model::select('uuid', 'name', 'guard_name')
+        return $this->model::select('id', 'name', 'guard_name')
             ->with('roles')
             ->when($request->search, function ($q) use ($request) {
                 $q->where('name', 'like', '%' . $request->search . '%')
@@ -70,6 +70,6 @@ class PermissionRepository
 
     public function list()
     {
-        return SelectOptionResource::collection($this->model::select('uuid', 'name')->get());
+        return SelectOptionResource::collection($this->model::select('id', 'name')->get());
     }
 }

@@ -58,7 +58,7 @@ class RoleRepository
 
     public function data($request)
     {
-        return $this->model::select('uuid', 'name')->with('permissions')
+        return $this->model::select('id', 'name')->with('permissions')
             ->when($request->search, function ($q) use ($request) {
                 $q->where('name', 'like', '%' . $request->search . '%')
                     ->orWhereHas('permissions', fn($q) => $q->where('name', 'like', "%{$request->search}%"));
@@ -68,11 +68,11 @@ class RoleRepository
 
     public function list()
     {
-        return SelectOptionResource::collection($this->model::select('uuid', 'name')->get());
+        return SelectOptionResource::collection($this->model::select('id', 'name')->get());
     }
 
     public function listForPengguna()
     {
-        return SelectOptionRoleForPenggunaResource::collection($this->model::select('name')->whereNotIn('name', ['KECAMATAN', 'KELURAHAN'])->get());
+        return SelectOptionRoleForPenggunaResource::collection($this->model::select('name')->whereNotIn('name', ['WAJIB-PAJAK'])->get());
     }
 }

@@ -43,7 +43,6 @@ class DatabaseSeeder extends Seeder
         $user = User::firstOrCreate(
             ['email' => 'admin@mail.com'],
             [
-                'nid' => '3326101803990001',
                 'name' => 'Admin',
                 'password' => bcrypt('a'),
                 'email_verified_at' => now(),

@@ -6,11 +6,11 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Common\DataRequest;
 use App\Http\Requests\User\Permission\StoreRequest;
 use App\Http\Requests\User\Permission\UpdateRequest;
-use App\Models\Permission;
 use App\Repositories\User\PermissionRepository;
 use App\Support\Facades\Memo;
 use Illuminate\Routing\Controllers\HasMiddleware;
 use Illuminate\Routing\Controllers\Middleware;
+use Spatie\Permission\Models\Permission;
 
 class PermissionController extends Controller implements HasMiddleware
 {
@@ -70,13 +70,13 @@ class PermissionController extends Controller implements HasMiddleware
 
     public function update(UpdateRequest $request, Permission $permission)
     {
-        $this->repository->update($permission->uuid, $request);
+        $this->repository->update($permission->id, $request);
         back()->with('success', 'Data berhasil diubah');
     }
 
     public function destroy(Permission $permission)
     {
-        $this->repository->delete($permission->uuid);
+        $this->repository->delete($permission->id);
         back()->with('success', 'Data berhasil dihapus');
     }
 
