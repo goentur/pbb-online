@@ -20,9 +20,9 @@ class PenggunaRepository
     }
     public function data($request)
     {
-        $query = $this->model::select('id', 'name', 'email')
+        $query = $this->model::with('roles')->select('id', 'name', 'email')
             ->when($request->search, $this->applySearchFilter($request))
-            ->whereHas('roles', fn($q) => $q->whereNotIn('name', ['KELURAHAN', 'KECAMATAN']));
+            ->whereNull('accountable_type');
         $result = PenggunaResource::collection($query->latest()->paginate($request->perPage ?? 25))->response()->getData(true);
         return $result['meta'] + ['data' => $result['data']];
     }
@@ -42,11 +42,10 @@ class PenggunaRepository
             throw $e;
         }
     }
-    public function update($id, $request)
+    public function update($user, $request)
     {
         try {
             DB::beginTransaction();
-            $user = $this->model->findOrFail($id);
             $user->update([
                 'email' => $request->email,
                 'name' => $request->nama,
@@ -58,8 +57,8 @@ class PenggunaRepository
             throw $e;
         }
     }
-    public function delete($id)
+    public function delete($user)
     {
-        return $this->model->find($id)?->delete();
+        return $user->delete();
     }
 }

@@ -41,11 +41,14 @@ class DatabaseSeeder extends Seeder
             'permission-delete',
         ]);
         $user = User::firstOrCreate(
-            ['email' => 'admin@mail.com'],
+            ['nid' => '199903182025211027'],
             [
-                'name' => 'Admin',
+                'name' => 'GUNTUR, A.Md',
                 'password' => bcrypt('a'),
+                'email' => 'goentursumkid@gmail.com',
                 'email_verified_at' => now(),
+                'telp' => '085201365883',
+                'telp_verified_at' => now(),
             ]
         );
         $user->assignRole($superAdmin);

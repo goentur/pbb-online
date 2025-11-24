@@ -73,6 +73,6 @@ class RoleRepository
 
     public function listForPengguna()
     {
-        return SelectOptionRoleForPenggunaResource::collection($this->model::select('name')->whereNotIn('name', ['WAJIB-PAJAK'])->get());
+        return SelectOptionRoleForPenggunaResource::collection($this->model::select('name')->get());
     }
 }

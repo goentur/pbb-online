@@ -7,6 +7,14 @@ enum StatusTTEPegawai: string
     case ACTIVE = 'y';
     case NO = 'n';
 
+    public function value(): string
+    {
+        return match ($this) {
+            self::ACTIVE => 'y',
+            self::NO => 'n',
+        };
+    }
+
     public function label(): string
     {
         return match ($this) {
@@ -26,8 +34,8 @@ enum StatusTTEPegawai: string
     public function color(): string
     {
         return match ($this) {
-            self::ACTIVE => 'bg-blue-500 dark:bg-blue-600', // Misalnya untuk status aktif
-            self::NO => 'bg-red-500 dark:bg-red-600',     // Misalnya untuk status tidak aktif
+            self::ACTIVE => 'bg-blue-500 dark:bg-blue-600',
+            self::NO => 'bg-red-500 dark:bg-red-600',
         };
     }
 

@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\Master\Pegawai;
 
+use App\Models\User;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 use Spatie\Permission\Models\Role;
@@ -24,8 +25,9 @@ class UpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'nama' => 'required|string|max:255',
-            'tte' => 'required|in:y,n',
+            'nama' => ['required', 'string', 'max:255'],
+            'role' => ['required', Rule::exists(Role::class, 'name')],
+            'tte' => ['required', 'in:y,n'],
         ];
     }
 }

@@ -19,21 +19,21 @@ class CreateNewUser implements CreatesNewUsers
     public function create(array $input): User
     {
         Validator::make($input, [
+            'nid' => ['required', 'string', 'regex:/^(\d{16}|[A-Z]\d{6,8})$/', Rule::unique(User::class)],
             'name' => ['required', 'string', 'max:255'],
-            'email' => [
-                'required',
-                'string',
-                'email',
-                'max:255',
-                Rule::unique(User::class),
-            ],
+            'email' => ['required', 'string', 'email', 'max:255', Rule::unique(User::class)],
             'password' => $this->passwordRules(),
+            'telp' => ['required', 'string', 'regex:/^(?:\+62|62|0)8[1-9]\d{7,10}$/', Rule::unique(User::class)]
         ])->validate();
 
-        return User::create([
+        $user = User::create([
             'name' => $input['name'],
-            'email' => $input['email'],
+            'nid' => $input['nid'],
             'password' => $input['password'],
+            'email' => $input['email'],
+            'telp' => $input['telp'],
         ]);
+        $user->assignRole('WAJIB-PAJAK');
+        return $user;
     }
 }

@@ -4,7 +4,9 @@ namespace App\Repositories\Master\Pegawai;
 
 use App\Http\Resources\Pegawai\PegawaiResource;
 use App\Models\Pegawai;
+use App\Models\User;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 
 class PegawaiRepository
 {
@@ -18,7 +20,7 @@ class PegawaiRepository
     }
     public function data($request)
     {
-        $query = $this->model::select('id', 'nip', 'nama', 'status_tte')
+        $query = $this->model::with('user')->select('id', 'nip', 'nama', 'status_tte')
             ->when($request->search, $this->applySearchFilter($request));
         $result = PegawaiResource::collection($query->latest()->paginate($request->perPage ?? 25))->response()->getData(true);
         return $result['meta'] + ['data' => $result['data']];
@@ -27,35 +29,48 @@ class PegawaiRepository
     {
         try {
             DB::beginTransaction();
-            $this->model->create([
+            $pegawai = $this->model->create([
                 'nip' => $request->nip,
                 'nama' => $request->nama,
                 'status_tte' => $request->tte,
             ]);
+            $user = User::create([
+                'name' => $request->nama,
+                'nid' => $request->nip,
+                'password' => Hash::make($request->password),
+                'email' => $request->email,
+                'telp' => $request->telp,
+                'accountable_type' => 'App\Models\Pegawai',
+                'accountable_id' => $pegawai->id,
+            ]);
+            $user->assignRole($request->role);
             DB::commit();
         } catch (\Exception $e) {
             DB::rollBack();
             throw $e;
         }
     }
-    public function update($id, $request)
+    public function update($pegawai, $request)
     {
         try {
             DB::beginTransaction();
-            $user = $this->model->findOrFail($id);
-            $user->update([
-                'nip' => $request->nip,
+            $pegawai->user->update([
+                'name' => $request->nama,
+            ]);
+            $pegawai->update([
                 'nama' => $request->nama,
                 'status_tte' => $request->tte,
             ]);
+            $pegawai->user->syncRoles($request->role);
             DB::commit();
         } catch (\Exception $e) {
             DB::rollBack();
             throw $e;
         }
     }
-    public function delete($id)
+    public function delete($pegawai)
     {
-        return $this->model->find($id)?->delete();
+        $pegawai->user->delete();
+        return $pegawai->delete();
     }
 }

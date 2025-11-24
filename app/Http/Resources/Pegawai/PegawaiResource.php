@@ -19,13 +19,17 @@ class PegawaiResource extends JsonResource
 
           return [
                'id' => $this->id,
-               'nip' => $this->nip,
                'nama' => $this->nama,
+               'nip' => $this->nip,
+               'email' => $this->user->email,
+               'telp' => $this->user->telp,
                'tte' => $statusTTE ? [
+                    'value' => $statusTTE->value(),
                     'label' => $statusTTE->label(),
                     'color' => $statusTTE->color(),
                     'status' => $statusTTE->boolean(),
                ] : null,
+               'role' => $this->user->getRoleNames()[0],
           ];
      }
 }

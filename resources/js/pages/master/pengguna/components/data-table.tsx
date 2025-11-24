@@ -31,7 +31,7 @@ export default function DataTable({
     setHapus,
 }: DataTableProps) {
     return (
-        <table className="w-full text-left border-collapse border">
+        <table className="w-full text-left border-collapse border text-[13px]">
             <thead>
                 <tr className="uppercase text-sm leading-normal">
                     <th className="p-2 border w-1">NO</th>
@@ -47,7 +47,7 @@ export default function DataTable({
                     data.map((value: any, index: number) => (
                         <tr
                             key={index}
-                            className="hover:bg-gray-100 dark:hover:bg-slate-900 align-text-top"
+                            className="hover:bg-gray-100 dark:hover:bg-slate-900 "
                         >
                             <td className="px-2 py-1 border text-center">{from++}</td>
                             <td className="px-2 py-1 border">{value.email}</td>

@@ -11,6 +11,7 @@ use App\Repositories\Master\Pegawai\PegawaiRepository;
 use App\Support\Facades\Memo;
 use Illuminate\Routing\Controllers\HasMiddleware;
 use Illuminate\Routing\Controllers\Middleware;
+use Illuminate\Support\Facades\Auth;
 
 class PegawaiController extends Controller implements HasMiddleware
 {
@@ -68,13 +69,13 @@ class PegawaiController extends Controller implements HasMiddleware
 
     public function update(UpdateRequest $request, Pegawai $pegawai)
     {
-        $this->repository->update($pegawai->id, $request);
+        $this->repository->update($pegawai, $request);
         back()->with('success', 'Data berhasil diubah');
     }
 
     public function destroy(Pegawai $pegawai)
     {
-        $this->repository->delete($pegawai->id);
+        $this->repository->delete($pegawai);
         back()->with('success', 'Data berhasil dihapus');
     }
 

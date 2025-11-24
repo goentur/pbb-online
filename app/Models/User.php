@@ -23,10 +23,13 @@ class User extends Authenticatable
      * @var list<string>
      */
     protected $fillable = [
-        'nid',
         'name',
-        'email',
+        'nid',
         'password',
+        'email',
+        'telp',
+        'accountable_type',
+        'accountable_id',
     ];
 
     /**
@@ -41,6 +44,11 @@ class User extends Authenticatable
         'remember_token',
     ];
 
+    public function getAuthIdentifierName()
+    {
+        return 'nid';
+    }
+
     /**
      * Get the attributes that should be cast.
      *
@@ -50,6 +58,7 @@ class User extends Authenticatable
     {
         return [
             'email_verified_at' => 'datetime',
+            'telp_verified_at' => 'datetime',
             'password' => 'hashed',
             'two_factor_confirmed_at' => 'datetime',
         ];

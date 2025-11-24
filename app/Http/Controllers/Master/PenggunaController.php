@@ -66,15 +66,15 @@ class PenggunaController extends Controller implements HasMiddleware
         abort(404);
     }
 
-    public function update(UpdateRequest $request, User $pengguna)
+    public function update(UpdateRequest $request, User $user)
     {
-        $this->repository->update($pengguna->id, $request);
+        $this->repository->update($user, $request);
         back()->with('success', 'Data berhasil diubah');
     }
 
-    public function destroy(User $pengguna)
+    public function destroy(User $user)
     {
-        $this->repository->delete($pengguna->id);
+        $this->repository->delete($user);
         back()->with('success', 'Data berhasil dihapus');
     }
 

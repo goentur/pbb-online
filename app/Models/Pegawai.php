@@ -14,4 +14,8 @@ class Pegawai extends Model
         'nip',
         'status_tte',
     ];
+    public function user()
+    {
+        return $this->morphOne(User::class, 'accountable');
+    }
 }

@@ -1,4 +1,6 @@
+import Combobox from '@/components/combobox'
 import FormInput from '@/components/form-input'
+import InfoPassword from '@/components/info-password'
 import { Button } from '@/components/ui/button'
 import { Checkbox } from '@/components/ui/checkbox'
 import {
@@ -22,6 +24,7 @@ type props = {
     formRefs: React.RefObject<Record<string, HTMLInputElement | null>>
     processing: boolean
     handleForm: (e: React.FormEvent) => void
+    dataRoles: { value: string; label: string }[]
 }
 export default function FormDialog({
     open,
@@ -34,6 +37,7 @@ export default function FormDialog({
     formRefs,
     processing,
     handleForm,
+    dataRoles
 }: props) {
     return (
         <Dialog open={open} onOpenChange={setOpen}>
@@ -58,9 +62,9 @@ export default function FormDialog({
                                 placeholder="Masukkan nip"
                                 error={errors.nip}
                                 readOnly={isEdit}
-                                autoFocus
                                 required
                             />
+
                             <FormInput
                                 id="nama"
                                 type="text"
@@ -75,7 +79,72 @@ export default function FormDialog({
                                 error={errors.nama}
                                 required
                             />
+
+                            <FormInput
+                                id="email"
+                                type="email"
+                                value={data.email}
+                                onChange={(e) => setData((prevData: any) => ({ ...prevData, email: e.target.value }))}
+                                inputRef={(el) => {
+                                    if (formRefs.current) {
+                                        formRefs.current['email'] = el;
+                                    }
+                                }}
+                                readOnly={isEdit}
+                                placeholder="Masukkan email"
+                                error={errors.email}
+                                required
+                            />
+
+                            <FormInput
+                                id="telp"
+                                type="text"
+                                value={data.telp}
+                                onChange={(e) => setData((prevData: any) => ({ ...prevData, telp: e.target.value }))}
+                                inputRef={(el) => {
+                                    if (formRefs.current) {
+                                        formRefs.current['telp'] = el;
+                                    }
+                                }}
+                                readOnly={isEdit}
+                                placeholder="Masukkan telp"
+                                error={errors.telp}
+                                required
+                            />
+
+                            {!isEdit && (<>
+                                <FormInput
+                                    id="password"
+                                    type="password"
+                                    value={data.password}
+                                    onChange={(e) => setData((prevData: any) => ({ ...prevData, password: e.target.value }))}
+                                    inputRef={(el) => {
+                                        if (formRefs.current) {
+                                            formRefs.current['password'] = el;
+                                        }
+                                    }}
+                                    placeholder="Masukkan password"
+                                    error={errors.password}
+                                    required
+                                />
+
+                                <FormInput
+                                    id="konfirmasi_password"
+                                    type="password"
+                                    value={data.password_confirmation}
+                                    onChange={(e) => setData((prevData: any) => ({ ...prevData, password_confirmation: e.target.value }))}
+                                    inputRef={(el) => {
+                                        if (formRefs.current) {
+                                            formRefs.current['password_confirmation'] = el;
+                                        }
+                                    }}
+                                    placeholder="Konfirmasi password"
+                                    required
+                                />
+                                <InfoPassword/>
+                            </>)}
                         </div>
+                        <Combobox label="role" selectedValue={data.role} options={dataRoles} onSelect={(value) => setData((prevData:any) => ({ ...prevData, role: value }))} error={errors.role} />
                         <div className="flex flex-col gap-12">
                             <Label className="hover:bg-accent/50 flex items-start gap-3 rounded-lg border p-3 has-[[aria-checked=true]]:border-blue-600 has-[[aria-checked=true]]:bg-blue-50 dark:has-[[aria-checked=true]]:border-blue-900 dark:has-[[aria-checked=true]]:bg-blue-950">
                                 <Checkbox
