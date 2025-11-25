@@ -4,37 +4,37 @@ namespace App\Http\Controllers\Master;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Common\DataRequest;
-use App\Http\Requests\Master\Pegawai\StoreRequest;
-use App\Http\Requests\Master\Pegawai\UpdateRequest;
-use App\Models\Pegawai;
-use App\Repositories\Master\Pegawai\PegawaiRepository;
+use App\Http\Requests\Master\Lampiran\StoreRequest;
+use App\Http\Requests\Master\Lampiran\UpdateRequest;
+use App\Models\Ref\RefLampiran;
+use App\Repositories\Master\Lampiran\LampiranRepository;
 use App\Support\Facades\Memo;
 use Illuminate\Routing\Controllers\HasMiddleware;
 use Illuminate\Routing\Controllers\Middleware;
 
-class PegawaiController extends Controller implements HasMiddleware
+class LampiranController extends Controller implements HasMiddleware
 {
-    public function __construct(protected PegawaiRepository $repository)
+    public function __construct(protected LampiranRepository $repository)
     {
         $this->repository = $repository;
     }
     public static function middleware(): array
     {
         return [
-            new Middleware('can:pegawai-index', only: ['index', 'data']),
-            new Middleware('can:pegawai-create', only: ['store']),
-            new Middleware('can:pegawai-update', only: ['update']),
-            new Middleware('can:pegawai-delete', only: ['destroy'])
+            new Middleware('can:lampiran-index', only: ['index', 'data']),
+            new Middleware('can:lampiran-create', only: ['store']),
+            new Middleware('can:lampiran-update', only: ['update']),
+            new Middleware('can:lampiran-delete', only: ['destroy'])
         ];
     }
     private function gate(): array
     {
         $user = auth()->user();
-        return Memo::forHour('pegawai-gate-' . $user->getKey(), function () use ($user) {
+        return Memo::forHour('lampiran-gate-' . $user->getKey(), function () use ($user) {
             return [
-                'create' => $user->can('pegawai-create'),
-                'update' => $user->can('pegawai-update'),
-                'delete' => $user->can('pegawai-delete'),
+                'create' => $user->can('lampiran-create'),
+                'update' => $user->can('lampiran-update'),
+                'delete' => $user->can('lampiran-delete'),
             ];
         });
     }
@@ -42,7 +42,7 @@ class PegawaiController extends Controller implements HasMiddleware
     public function index()
     {
         $gate = $this->gate();
-        return inertia('master/pegawai/index', compact("gate"));
+        return inertia('master/lampiran/index', compact("gate"));
     }
 
     public function create()
@@ -66,15 +66,15 @@ class PegawaiController extends Controller implements HasMiddleware
         abort(404);
     }
 
-    public function update(UpdateRequest $request, Pegawai $pegawai)
+    public function update(UpdateRequest $request, RefLampiran $lampiran)
     {
-        $this->repository->update($pegawai, $request);
+        $this->repository->update($lampiran, $request);
         back()->with('success', 'Data berhasil diubah');
     }
 
-    public function destroy(Pegawai $pegawai)
+    public function destroy(RefLampiran $lampiran)
     {
-        $this->repository->delete($pegawai);
+        $this->repository->delete($lampiran);
         back()->with('success', 'Data berhasil dihapus');
     }
 
