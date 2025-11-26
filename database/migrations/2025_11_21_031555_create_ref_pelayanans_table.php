@@ -14,7 +14,6 @@ return new class extends Migration
         Schema::create('ref_pelayanans', function (Blueprint $table) {
             $table->id();
             $table->string('nama')->nullable();
-            $table->string('slug')->nullable();
             $table->string('keterangan')->nullable();
             $table->string('url')->nullable();
             $table->string('status_pelayanan')->nullable();

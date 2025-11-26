@@ -18,22 +18,23 @@ const breadcrumbs: BreadcrumbItem[] = [
     },
     {
         title: 'Master',
-        href: 'master.lampiran.index',
+        href: 'master.pelayanan.index',
     },
     {
-        title: 'Lampiran',
-        href: 'master.lampiran.index',
+        title: 'Pelayanan',
+        href: 'master.pelayanan.index',
     },
 ];
 
-export default function Index({ gate }: IndexGate) {
-    const title = 'Lampiran'
+export default function Index({ gate, statusPelayanan }: any) {
+    const title = 'Pelayanan'
     const [form, setForm] = useState(false)
     const [hapus, setHapus] = useState(false)
     const formRefs = useRef<Record<string, HTMLInputElement | null>>({})
     const [loading, setLoading] = useState(false)
     const [isEdit, setIsEdit] = useState(false)
     const [dataTable, setDataTable] = useState<[]>([])
+    const [dataLampiran, setDataLampiran] = useState<[]>([])
     const [linksPagination, setLinksPagination] = useState([])
     const [infoDataTabel, setInfoDataTabel] = useState<InfoDataTabel>({
         page: 1,
@@ -44,7 +45,6 @@ export default function Index({ gate }: IndexGate) {
         search: null,
     })
 
-    
     const {
         data,
         setData,
@@ -54,17 +54,22 @@ export default function Index({ gate }: IndexGate) {
         delete: destroy,
         reset,
         processing,
-    } = useForm()
+    } = useForm({
+        lampiran: [],
+    })
     
     useEffect(() => {
         getData()
     }, [infoDataTabel.page, infoDataTabel.search, infoDataTabel.perPage])
+    useEffect(() => {
+        getDataLampiran()
+    }, [])
         
     const getData = async () => {
         setLoading(true)
         try {
             const response = await axios.post(
-                route('master.lampiran.data'),
+                route('master.pelayanan.data'),
                 {
                     page: infoDataTabel.page,
                     search: infoDataTabel.search,
@@ -87,13 +92,21 @@ export default function Index({ gate }: IndexGate) {
             setLoading(false)
         }
     }
+    const getDataLampiran = async () => {
+        try {
+            const response = await axios.post(route('master.lampiran.list'))
+            setDataLampiran(response.data)
+        } catch (error: any) {
+            alertApp(error.message, 'error')
+        }
+    }
     
     const handleForm = (e: React.FormEvent) => {
         e.preventDefault()
         const action = isEdit ? patch : post
         const routeName = isEdit
-            ? (route('master.lampiran.update', data) as string)
-            : (route('master.lampiran.store') as string)
+            ? (route('master.pelayanan.update', data) as string)
+            : (route('master.pelayanan.store') as string)
 
         action(routeName, {
             preserveScroll: true,
@@ -113,7 +126,7 @@ export default function Index({ gate }: IndexGate) {
     }
     const handleHapus = (e: React.FormEvent) => {
         e.preventDefault()
-        destroy(route('master.lampiran.destroy', data), {
+        destroy(route('master.pelayanan.destroy', data), {
             preserveScroll: true,
             onSuccess: (e) => {
                 setHapus(false)
@@ -168,6 +181,8 @@ export default function Index({ gate }: IndexGate) {
                 formRefs={formRefs}
                 processing={processing}
                 handleForm={handleForm}
+                statusPelayanan={statusPelayanan}
+                dataLampiran={dataLampiran}
             />
             <Delete
                 open={hapus}

@@ -13,7 +13,7 @@ import {
 import { dashboard } from '@/routes';
 import { type NavItem } from '@/types';
 import { Link, usePage } from '@inertiajs/react';
-import { ChartPie, Key, NewspaperIcon, UserCheck, UserRoundCog, Users } from 'lucide-react';
+import { ChartPie, Key, NewspaperIcon, NotepadText, UserCheck, UserRoundCog, Users } from 'lucide-react';
 import AppLogo from './app-logo';
 
 
@@ -43,6 +43,12 @@ const mainNavMaster: NavItem[] = [
         href: "master.lampiran.index",
         icon: NewspaperIcon,
         permission: 'lampiran-index',
+    },
+    {
+        title: "Pelayanan",
+        href: "master.pelayanan.index",
+        icon: NotepadText,
+        permission: 'pelayanan-index',
     },
 ];
 const footerNavItems: NavItem[] = [

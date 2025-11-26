@@ -82,4 +82,9 @@ class LampiranController extends Controller implements HasMiddleware
     {
         return response()->json($this->repository->data($request), 200);
     }
+
+    public function list()
+    {
+        return response()->json($this->repository->list(), 200);
+    }
 }

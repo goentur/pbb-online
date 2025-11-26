@@ -2,9 +2,9 @@
 
 namespace App\Models\Ref;
 
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\Pivot;
 
-class RefLampiranPelayanan extends Model
+class RefLampiranPelayanan extends Pivot
 {
-    //
+    protected $fillable = ['no_urut'];
 }

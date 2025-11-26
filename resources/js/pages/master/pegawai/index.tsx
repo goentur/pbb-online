@@ -149,7 +149,7 @@ export default function Index({ gate }: IndexGate) {
                         <DataTableFilters
                             gate={gate}
                             setInfoDataTabel={setInfoDataTabel}
-                            onClick={() => {reset(), setForm(true), setIsEdit(false),setData({ ...data, tte: 'n' })}}
+                            onClick={() => {reset(), setForm(true), setIsEdit(false),setData({})}}
                         />
                         <DataTable
                             gate={gate}
