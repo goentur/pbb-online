@@ -54,7 +54,9 @@ export default function Index({ gate }: IndexGate) {
         delete: destroy,
         reset,
         processing,
-    } = useForm()
+    } = useForm({
+        wajib : 'n'
+    })
     
     useEffect(() => {
         getData()

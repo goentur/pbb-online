@@ -30,7 +30,7 @@ class StoreRequest extends FormRequest
             'status' => ['required', Rule::enum(StatusPelayanan::class)],
             'url' => ['required', 'string', 'max:255'],
             'tte' => ['required', 'in:y,n'],
-            'lampiran' => 'required|array',
+            'lampiran' => ['nullable', 'array'],
             'lampiran.*' => Rule::exists(RefLampiran::class, 'id'),
         ];
     }

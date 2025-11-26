@@ -37,7 +37,6 @@ class PelayananRepository
             foreach ($request->lampiran as $index => $lampiranId) {
                 $syncData[$lampiranId] = ['no_urut' => $index + 1];
             }
-
             $pelayanan->lampiran()->sync($syncData);
             DB::commit();
         } catch (\Exception $e) {

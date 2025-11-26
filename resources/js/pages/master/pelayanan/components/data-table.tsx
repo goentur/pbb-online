@@ -54,7 +54,7 @@ export default function DataTable({
                             <td className="px-2 py-1 border text-center">{from++}</td>
                             <td className="px-2 py-1 border">{value.nama}</td>
                             <td className="px-2 py-1 border">{value.keterangan}</td>
-                            <td className="px-2 py-1 border w-1 whitespace-nowrap">{value.url}</td>
+                            <td className="px-2 py-1 border">{value.url}</td>
                             <td className="px-2 py-1 border">
                                 <Badge
                                 variant="secondary"

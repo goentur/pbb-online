@@ -62,6 +62,6 @@ class LampiranRepository
 
     public function list()
     {
-        return SelectOptionResource::collection($this->model::select('id', 'nama')->get());
+        return SelectOptionResource::collection($this->model::select('id', 'nama')->orderBy('nama')->get());
     }
 }
